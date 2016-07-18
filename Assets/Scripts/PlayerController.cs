@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour
@@ -7,10 +8,16 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public float speed;
     public float jump;
+    private int count;
+    public Text countText;
+    public Text winText;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        count = 0;
+        SetCountText();
+        winText.text = "";
     }
 
     void FixedUpdate()
@@ -49,6 +56,35 @@ public class PlayerController : MonoBehaviour
         {
 
             rb.AddForce(new Vector3(0,jump,0));
+        }
+
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        //Destroy(other.gameObject);
+        if (other.gameObject.CompareTag("Pick Up"))
+        {
+            other.gameObject.SetActive(false);
+            count++;
+            SetCountText();
+        }
+    }
+
+    void SetCountText()
+    {
+        countText.text = "Targets gathered:" + count.ToString();
+        if (count >= 6)
+        {
+            winText.text = "Level 1 Complete! Proceed to next level";
+        }
+        if (count >= 12)
+        {
+            winText.text = "Level 2 Complete! Proceed to next level";
+        }
+        if (count >= 18)
+        {
+            winText.text = "!!!You Win!!!";
         }
     }
 }
