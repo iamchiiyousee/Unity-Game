@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private int count;
     public Text countText;
     public Text winText;
+    public Text goalText;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
         count = 0;
         SetCountText();
         winText.text = "";
+        goalText.text = "Collect all 18 golden cubes!";
     }
 
     void FixedUpdate()
@@ -68,21 +70,30 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             count++;
             SetCountText();
+            goalText.text = "";
         }
     }
 
     void SetCountText()
     {
         countText.text = "Targets gathered:" + count.ToString();
-        if (count >= 6)
+        if (count == 6)
         {
-            winText.text = "Level 1 Complete! Proceed to next level";
+            winText.text = "Level 1 Complete! Proceed to level 2";
         }
-        if (count >= 12)
+        if (count == 7)
         {
-            winText.text = "Level 2 Complete! Proceed to next level";
+            winText.text = "";
         }
-        if (count >= 18)
+        if (count == 12)
+        {
+            winText.text = "Level 2 Complete! Proceed to level 3";
+        }
+        if (count == 13)
+        {
+            winText.text = "";
+        }
+        if (count == 18)
         {
             winText.text = "!!!You Win!!!";
         }
